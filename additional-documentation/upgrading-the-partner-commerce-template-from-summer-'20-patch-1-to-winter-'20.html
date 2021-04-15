@@ -1,0 +1,203 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Conga Digital Commerce Winter &#x27;20</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Conga Digital Commerce Winter &#x27;20</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="upgrading-the-partner-commerce-template-from-summer-20-patch-1-to-winter-20">Upgrading the Partner Commerce Template from Summer &#39;20 Patch 1 to Winter &#39;20</h1>
+<h2 id="table-of-contents">Table Of Contents</h2>
+<ul>
+<li><a href="#upgrade-ang10">Upgrading to Angular 10</a></li>
+<li><a href="#replace-gallery">Replace ngx-gallery with ngx-gallery-9</a></li>
+<li><a href="#upgrade-others">Upgrade your other dependencies</a></li>
+<li><a href="#ladd-and-core">Install &quot;ladda&quot; and &quot;core-js&quot;</a></li>
+<li><a href="#roboto">Roboto font SCSS file</a></li>
+<li><a href="#ivy">Turn off Ivy</a></li>
+<li><a href="#product-detail">Product detail component updates</a></li>
+<li><a href="#resolver">Product detail resolver updates</a></li>
+</ul>
+<div id="upgrade-ang10"/>
+
+<h2 id="upgrading-to-angular-10">Upgrading to Angular 10</h2>
+<p>Winter &#39;20 SDK is built on Angular 10 and to consume it you must upgrade your templates to Angular 10. </p>
+<p>Run the below command to upgrade your template to Angular 10.</p>
+<div><pre class="line-numbers"><code class="language-shell">ng update &#64;angular/cli &#64;angular/core —force</code></pre></div><p>For more information about Angular 10 upgrade, please refer this <a href="https://medium.com/@balramchavan/how-to-upgrade-angular-version-to-latest-release-version-10-48cd64ad21b3">document</a>.</p>
+<div id="replace-gallery"/>
+
+<h2 id="replacing-ngx-gallery-with-ngx-gallery-9">Replacing ngx-gallery with ngx-gallery-9</h2>
+<p>The &quot;ngx-gallery&quot; library used in the products detail page does not support Angular 10. You must replace the &quot;ngx-gallery&quot; library with &quot;ngx-gallery-9&quot;. Basically, both the libraries are same, just that &quot;ngx-gallery-9&quot; is upgraded to Angular 9 or 10.</p>
+<div id="upgrade-others"/>
+
+<h2 id="upgrading-your-other-dependencies">Upgrading your other dependencies</h2>
+<p>You must update your development and run-time dependencies to work seamlessly with Angular 10.  To update these dependencies, you must install 
+the <code>npm-check-updates</code> library globally.</p>
+<div><pre class="line-numbers"><code class="language-shell">npm i -g npm-check-updates</code></pre></div><p>Now, browse to your project and run the following command:</p>
+<div><pre class="line-numbers"><code class="language-shell">ncu -u</code></pre></div><p>This updates all the dependencies of your package.json to the latest version. Update the Digital Commerce libraries to the latest Summer &#39;20 Patch 1 version. After updating the dependencies and libraries, you must delete the &quot;node_modules&quot; and &quot;package-lock.json&quot; and run the npm install command.</p>
+<div><pre class="line-numbers"><code class="language-shell">npm install</code></pre></div><div id="ladda-and-core"/>
+
+<h2 id="installing-ladda-and-core-js">Installing &quot;ladda&quot; and &quot;core-js&quot;</h2>
+<p>To build your project smoothly, you must install &quot;ladda&quot; and &quot;core-js&quot; libraries separately.</p>
+<div id="roboto"/>
+
+<h2 id="moving-the-roboto-font-scss-file-to-stylesscss">Moving the Roboto font SCSS file to styles.scss</h2>
+<p>Angular.json is loaded with roboto SCSS file that must be moved to &quot;styles.scss&quot; to avoid build issues with angular 10 upgrade. Update the &quot;styles.scss&quot; file as shown below:</p>
+<div><pre class="line-numbers"><code class="language-scss">$roboto-font-path: &#39;~roboto-fontface/fonts&#39;;
+&#64;import &quot;~roboto-fontface/css/roboto/sass/roboto-fontface-regular&quot;;</code></pre></div><div id="ivy"/>
+
+<h2 id="turning-off-ivy">Turning off Ivy</h2>
+<p>Due to known issues using the latest Angular Ivy compiler, it is recommended to turn it off in your tsconfig.json file. Also, change the &quot;module&quot; to &quot;es2020&quot;.</p>
+<div><pre class="line-numbers"><code class="language-json">{
+  &quot;compileOnSave&quot;: false,
+  &quot;compilerOptions&quot;: {
+    &quot;module&quot; : &quot;es2020&quot;,
+    &quot;baseUrl&quot;: &quot;./&quot;,
+    &quot;outDir&quot;: &quot;./dist/out-tsc&quot;,
+    &quot;sourceMap&quot;: true,
+    &quot;declaration&quot;: false,
+    &quot;moduleResolution&quot;: &quot;node&quot;,
+    &quot;emitDecoratorMetadata&quot;: true,
+    &quot;experimentalDecorators&quot;: true,
+    &quot;downlevelIteration&quot;: true,
+    &quot;target&quot;: &quot;es5&quot;,
+    &quot;typeRoots&quot;: [
+      &quot;node_modules/&#64;types&quot;
+    ],
+    &quot;lib&quot;: [
+      &quot;es2017&quot;,
+      &quot;dom&quot;
+    ]
+  },
+  &quot;angularCompilerOptions&quot;: {
+    &quot;enableIvy&quot;: false
+  }
+}</code></pre></div><div id="product-detail"/>
+
+<h2 id="updating-the-product-detail-component">Updating the Product detail component</h2>
+<p>Due to some changes to the product configuration component in Winter &#39;20, there are some changes in the input and output parameters. 
+You must pass the product id instead of complete product, and the product configuration comoponent does not provide the <code>configurationChange</code> 
+output event; thus, you must use the new <code>ProductConfigurationService</code> instead of <code>configurationChange</code> to listen to the configuration and other changes.</p>
+<p>Update the <code>product-detail.component.html</code> and <code>product-detail.component.ts</code> files with the following:</p>
+<div><pre class="line-numbers"><code class="language-html">&lt;apt-product-configuration
+  [productId]=&quot;viewState?.product?.Id&quot;
+  [relatedTo]=&quot;viewState?.relatedTo&quot;
+  (click)=&quot;configurationChanged = true&quot;&gt;
+&lt;/apt-product-configuration&gt;</code></pre></div><div><pre class="line-numbers"><code class="language-ts">ngOnInit() {
+    this.viewState$ = this.resolver.state();
+    this.subscriptions.push(this.productConfigurationService.configurationChange.subscribe(response =&gt; {
+      if (response &amp;&amp; _.has(response, &#39;configurationPending&#39;)) {
+        this.configurationPending = _.get(response, &#39;configurationPending&#39;);
+      } else {
+        this.product = _.get(response, &#39;product&#39;);
+        this.cartItemList = _.get(response, &#39;itemList&#39;);
+        this.configurationChanged = _.get(response, &#39;configurationFlags.optionChanged&#39;) || _.get(response, &#39;configurationFlags.attributeChanged&#39;);
+      }
+    }));
+}
+
+ngOnDestroy() {
+  _.forEach(this.subscriptions, item =&gt; {
+    if (item) item.unsubscribe();
+  });
+}</code></pre></div><div id="resolver"/>
+
+<h2 id="updating-the-product-detail-resolver">Updating the Product detail resolver</h2>
+<p>Whenever the product details page opens, resetting of some paramaters is needed in the product configuration service. To reset, you must first add the following to the <code>resolve</code> method.</p>
+<div><pre class="line-numbers"><code class="language-ts">resolve(route: ActivatedRouteSnapshot): Observable&lt;ProductDetailsState&gt; {
+    this.productConfigurationService.onChangeConfiguration(null);
+    ...
+}    </code></pre></div>
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'upgrading-the-partner-commerce-template-from-summer-&#x27;20-patch-1-to-winter-&#x27;20.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

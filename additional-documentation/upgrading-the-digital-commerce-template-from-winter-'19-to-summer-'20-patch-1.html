@@ -1,0 +1,175 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Conga Digital Commerce Winter &#x27;20</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/material.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Conga Digital Commerce Winter &#x27;20</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content additional-page">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   
+
+
+
+
+<h1 id="upgrading-the-digital-commerce-template-from-winter-19-to-summer-20-patch-1">Upgrading the Digital Commerce Template from Winter &#39;19 to Summer &#39;20 Patch 1</h1>
+<h2 id="table-of-contents">Table Of Contents</h2>
+<ul>
+<li><a href="#upgrade-libs">Updating the Libraries</a></li>
+<li><a href="#updating-constraint-side-menu">Replacing ConstraintIconModule and ConstraintSideMenuModule with ConstraintRuleModule</a></li>
+<li><a href="#updating-bootstrap-modal">Importing BsModalRef From &#39;ngx-bootstrap/modal&#39;</a></li>
+<li><a href="#removing-constraint-side-menu">Removing apt-cr-side-menu.</a></li>
+<li><a href="#replacing-product-config-summary">Replacing ProductConfigurationSummaryModule with ConfigurationSummaryModule</a></li>
+<li><a href="#update-cart-model">Updating the Cart Model</a></li>
+<li><a href="#update-constraint-alert">Removing detailPageAlert from apt-cr-constraint-alert</a></li>
+<li><a href="#updating-cart-list">Fixing the Cart List Component</a></li>
+<li><a href="#updating-product-details">Passing the aboEnabled Flag to the add-to-cart component from product-detail.component.ts</a></li>
+<li><a href="#updating-quote-model">Updating the Quote Model</a></li>
+</ul>
+<div id="upgrade-libs"/>
+
+<h2 id="updating-the-libraries">Updating the Libraries</h2>
+<p>You must update the following packages to the latest version:</p>
+<ul>
+<li><code>@apttus/core</code> <em>^1903.x.x --&gt;</em> <strong><em>^2002.x.x</em></strong></li>
+<li><code>@apttus/ecommerce</code> <em>^1903.x.x --&gt;</em> <strong><em>^2002.x.x</em></strong></li>
+<li><code>@apttus/elements</code> <em>^1903.x.x --&gt;</em> <strong><em>~2002.x.x</em></strong></li>
+</ul>
+<p>After updating the packages, verify if your <code>package.json</code> under dependencies reflects the latest version as under:</p>
+<div><pre class="line-numbers"><code class="language-json">    ...
+    &quot;&#64;apttus/core&quot;: &quot;^2002.x.x&quot;,
+    &quot;&#64;apttus/ecommerce&quot;: &quot;^2002.x.x&quot;,
+    &quot;&#64;apttus/elements&quot;: &quot;^2002.x.x&quot;,
+    ...</code></pre></div><div id="updating-constraint-side-menu"/>
+
+<h2 id="replacing-constrainticonmodule-and-constraintsidemenumodule-with-constraintrulemodule">Replacing ConstraintIconModule and ConstraintSideMenuModule with ConstraintRuleModule</h2>
+<p>Open the &quot;component.module.ts&quot; file and remove <code>ConstraintIconModule</code> and <code>ConstraintSideMenuModule</code> from <code>imports</code> and 
+add <code>ConstraintRuleModule</code>.</p>
+<div id="updating-bootstrap-modal"/>
+
+<h2 id="importing-bsmodalref-from-ngx-bootstrapmodal">Importing BsModalRef From &#39;ngx-bootstrap/modal&#39;</h2>
+<p>Open the &quot;component.module.ts&quot; file and import <code>BsModalRef</code>. It must be the same as the following:</p>
+<div><pre class="line-numbers"><code class="language-ts">import { BsModalRef } from &#39;ngx-bootstrap/modal&#39;;
+providers: [ BsModalRef ]</code></pre></div><div id="removing-constraint-side-menu"/>
+
+<h2 id="removing-apt-cr-side-menu">Removing apt-cr-side-menu</h2>
+<p>Open the &quot;header.component.html&quot; file and remove <code>&lt;apt-cr-side-menu&gt;&lt;/apt-cr-side-menu&gt;</code>.</p>
+<div id="replacing-product-config-summary"/>
+
+<h2 id="replacing-productconfigurationsummarymodule-with-configurationsummarymodule">Replacing ProductConfigurationSummaryModule with ConfigurationSummaryModule</h2>
+<p>Open the &quot;cart.module.ts&quot; file and remove <code>ProductConfigurationSummaryModule</code> from <code>imports</code> and 
+add <code>ConfigurationSummaryModule</code>.</p>
+<div id="update-cart-model"/>
+
+<h2 id="updating-the-cart-model">Updating the Cart Model</h2>
+<p>Replace <code>Cart.Quote</code> with <code>Cart.Proposald</code> and <code>Cart.Quote.Id</code> with <code>Cart.ProposaldId</code>. It must be the same as the following:</p>
+<div><pre class="line-numbers"><code class="language-ts">this.cart.ProposaldId
+this.cart.Proposald</code></pre></div><div id="update-constraint-alert"/>
+
+<h2 id="removing-detailpagealert-from-apt-cr-constraint-alert">Removing detailPageAlert from apt-cr-constraint-alert</h2>
+<p>Replace <code>&lt;apt-cr-constraint-alert [detailPageAlert]=&#39;false&#39;&gt;</code> with <code>&lt;apt-constraint-rule-alert&gt;</code>. Basically, remove the detailPageAlert input from the component and change the selector. It must be the same as the following:</p>
+<div><pre class="line-numbers"><code class="language-ts">&lt;apt-constraint-rule-alert&gt; &lt;/apt-constraint-rule-alert&gt;</code></pre></div><div id="updating-cart-list"/>
+
+<h2 id="fixing-the-cart-list-component">Fixing the Cart List Component</h2>
+<p>Now that the <code>CartService</code> does not consist of the <code>getMyCarts</code> method, use generic <code>query</code> method. Replace the <code>getMyCarts</code> method as following:</p>
+<div><pre class="line-numbers"><code class="language-ts">this.cartService.query({
+  page: {
+    pageLimit: this.limit,
+    pageNumber: this.currentPage
+  }
+})</code></pre></div><div id="updating-product-details"/>
+
+<h2 id="passing-the-aboenabled-flag-to-the-add-to-cart-component-from-product-detailcomponentts">Passing the aboEnabled Flag to the add-to-cart component from product-detail.component.ts</h2>
+<p>With Summer &#39;20 Patch 1 release, you can decide whether to show or hide the ABO actions. To disable ABO actions, add the aboEnabled flag <code>[aboEnabled]= &quot;false&quot;</code> to <code>&lt;apt-add-to-cart&gt;</code> in <code>product-detail.component.ts</code>. </p>
+<div id="updating-quote-model"/>
+
+<h2 id="updating-the-quote-model">Updating the Quote Model</h2>
+<p>Replace <code>quote.PrimaryContactId</code> with <code>quote.Primary_ContactId</code> and <code>quote.PrimaryContact</code> with <code>quote.Primary_Contact</code>.</p>
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'additional-page';
+            var COMPODOC_CURRENT_PAGE_URL = 'upgrading-the-digital-commerce-template-from-winter-&#x27;19-to-summer-&#x27;20-patch-1.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
